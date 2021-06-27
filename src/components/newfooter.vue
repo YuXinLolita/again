@@ -1,6 +1,12 @@
 j2<template>
     <div>
-        <div>已完成{{complete}},总共{{list.length}}<button @click="clear">清除已完成</button></div>
+        <div>
+            <div v-if="list.length > 0">
+                已完成{{complete}},总共{{list.length}}
+
+                <button v-if="complete> 0" @click="clear">清除已完成</button>
+            </div>
+        </div>
 
     </div>
 
@@ -8,7 +14,7 @@ j2<template>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent,computed } from 'vue'
 
 export default defineComponent({
     name:"newfooter",
@@ -17,16 +23,22 @@ export default defineComponent({
             type:Array,
         }
     },
-    setup(props) {
-        let complete = () => {
+    setup(props, ctx) {
+        let complete = computed(() => {
           let arr =  props.list.filter((item)=>{
-              item.complete
-            })
+            return  item.complete 
+          })
             return arr.length
-                                }
+                                })
+        // let complete = ref(1);
         // let complete = ref(1);
         let clear = () => {
-            console.log("clear按钮已按下");
+            let arr = props.list.filter((item)=>{
+                return  item.complete === false
+            })
+            
+            ctx.emit("clear",arr);  
+            
         }
         return {
             clear,

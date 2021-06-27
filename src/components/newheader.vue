@@ -7,17 +7,19 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent,ref } from 'vue'
 
 export default defineComponent({
     name:"newheader",
     setup(props, ctx) {
-      let value = ref("");
+      
       let enter = () => {
          ctx.emit("enter",value.value);
-         value.value = ("");
-      }
+         value.value = "";
       
+        
+      }
+      let  value = ref("");
       return {
           value,
           enter
