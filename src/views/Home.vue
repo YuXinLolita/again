@@ -1,18 +1,37 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+   <newheader @enter="enter"></newheader>
+   <newmain :list="list"></newmain>
+   <newfooter :list="list"></newfooter>
   </div>
 </template>
-
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
-export default {
-  name: 'Home',
+import { defineComponent, ref} from "vue";
+import newfooter from "../components/newfooter.vue";
+import newheader from "../components/newheader.vue";
+import newmain from "../components/newmain.vue";
+import { useStore } from "vuex";
+export default defineComponent ({
   components: {
-    HelloWorld
+    newfooter,
+    newheader,
+    newmain
+  },
+  setup() {
+
+        let store = useStore();
+        let list = store.state.list;
+      let enter = (val) => {
+          store.commit("add",val)
+          
+          
+      }
+
+      return {
+
+        enter,
+        list
+      }
   }
-}
+})
 </script>
